@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ayuda</string>
+
+    <!--Pantalla-->
+    <string name="btn_clear">Borrar Historial</string>
+
+    <!--Salida con formato-->
+    <string name="f_fecha"><![CDATA[Fecha: ]]></string>
+    <string name="f_medio"><![CDATA[Medio: ]]></string>
+</resources>
