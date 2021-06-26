@@ -30,6 +30,11 @@ fun formatoAllAyudatoString(ayuda: List<Ayuda>, resources: Resources): Spanned {
 }
 @SuppressLint("SimpleDateFormat")
 fun convertLongToDateString(systemTime: Long): String {
-    return SimpleDateFormat(" dd/MM/yy' - 'HH:mm")
+    return SimpleDateFormat("dd/MM/yy")
+        .format(systemTime).toString()
+}
+@SuppressLint("SimpleDateFormat2")
+fun convertLongToDateString2(systemTime: Long): String {
+    return SimpleDateFormat("HH:mm")
         .format(systemTime).toString()
 }

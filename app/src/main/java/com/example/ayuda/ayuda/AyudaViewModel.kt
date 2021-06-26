@@ -20,8 +20,7 @@ class AyudaViewModel(private val dataBase: AyudaDataBaseDao, application: Applic
         jobViewModel.cancel()
     }
 
-    private var allAyuda= dataBase.getAll()
-    val allAyudaString= Transformations.map(allAyuda){formatoAllAyudatoString(it, application.resources)}
+    var allAyuda= dataBase.getAll()
 
 //Phone---------------------------------------
     private val _visiblePhone= MutableLiveData<Int>()
@@ -63,6 +62,17 @@ class AyudaViewModel(private val dataBase: AyudaDataBaseDao, application: Applic
     }
     fun acEmail(){
         _activoEmail.value=false
+    }
+
+//Navegacion - click
+    private val _navigateToDetalle= MutableLiveData<Long>()
+    val navigateToDetalle: LiveData<Long>
+        get()= _navigateToDetalle
+    fun onAyudaClick(id: Long){
+        _navigateToDetalle.value= id
+    }
+    fun onNavigateToDetalle(){
+        _navigateToDetalle.value=null
     }
 
 //-------------------------------------------

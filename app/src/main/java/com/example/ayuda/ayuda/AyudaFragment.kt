@@ -2,24 +2,23 @@ package com.example.ayuda.ayuda
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.telephony.SmsManager
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ayuda.R
 import com.example.ayuda.databinding.FragmentAyudaBinding
-import com.example.ayuda.db.Ayuda
 import com.example.ayuda.db.AyudaDataBase
+import com.example.ayuda.detalle.DetalleFragmentDirections
 import java.lang.Exception
 
 class AyudaFragment : Fragment() {
@@ -38,7 +37,26 @@ class AyudaFragment : Fragment() {
         binding.viewModel=viewModel
         binding.lifecycleOwner=this
 
+        val manager= GridLayoutManager(activity, 3)
+        val adapter= AyudaAdapter(AyudaClickListener {
+            it?.let {
+                viewModel.onAyudaClick(it)
+            }
+        })
+        viewModel.navigateToDetalle.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                this.findNavController().navigate(AyudaFragmentDirections.actionAyudaFragmentToDetalleFragment(it))
+                viewModel.onNavigateToDetalle()
+            }
+        })
 
+        binding.listAyuda.adapter= adapter
+        binding.listAyuda.layoutManager =manager
+        viewModel.allAyuda.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                adapter.submitList(it)
+            }
+        })
 
         viewModel.activoPhone.observe(viewLifecycleOwner, Observer {
             if(it){
